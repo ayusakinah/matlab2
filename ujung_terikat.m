@@ -1,0 +1,33 @@
+clear;
+string_dimension=100;
+time_loops=1500;
+% Preallocate matrices for speed;
+x=1/string_dimension:1/string_dimension:1;
+x_scale=1:1:string_dimension;
+y_next =zeros(1,string_dimension);
+signal_data=zeros(1,time_loops);
+elapsed_time=zeros(1,time_loops);
+% Initialise string position
+k=100;
+x_0=0.5;
+h=500
+delta_t=3.33e-5;
+initial_position=sin(pi.*x);
+y_current =initial_position;
+y_previous = initial_position;
+initial_time=0;
+time=initial_time;
+for time_step = 1:time_loops;
+time=time+delta_t;
+[y_next]=propagate(y_current, y_previous,h);
+y_previous=y_current;
+y_current=y_next;
+clf;
+plot(x_scale/string_dimension, y_current,'r');
+title('Gelombang tali ujung bebas');
+xlabel('Posisi');
+ylabel('Simpangan');
+axis([0 1 -1 1]);
+hold on;
+drawnow;
+end;
